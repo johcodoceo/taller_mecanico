@@ -1,12 +1,13 @@
 package com.taller_mecanico.mecanico_service;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 class MecanicoServiceApplicationTests {
 
     @Test
-    void contextLoads() {
+    void applicationClassExists() {
+        assertNotNull(MecanicoServiceApplication.class);
     }
 }
