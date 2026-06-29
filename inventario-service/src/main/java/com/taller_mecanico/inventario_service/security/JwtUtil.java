@@ -1,6 +1,9 @@
 package com.taller_mecanico.inventario_service.security;
 
 import java.security.Key;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
@@ -9,6 +12,8 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
     @Value("${jwt.secret}")
     private String secret;
@@ -37,8 +42,11 @@ public class JwtUtil {
     public boolean isTokenValid(String token) {
         try {
             extractAllClaims(token);
+            logger.info("event=jwt_validation_success");
             return true;
         } catch (Exception e) {
+            logger.warn("event=jwt_validation_failed exception={} message={}",
+                    e.getClass().getSimpleName(), e.getMessage());
             return false;
         }
     }
