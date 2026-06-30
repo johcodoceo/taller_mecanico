@@ -223,6 +223,19 @@ Se implementaron logs estructurados para:
 - Auditoría
 
 ---
+---
+
+# 📝 Subtítulos del Video
+
+Como parte del material complementario de la entrega, se incluye el archivo:
+
+```text
+subtitulos-video.txt https://drive.google.com/file/d/1mWj6oMr8G6PAQ-UwVEXppBvcQ9Ninvgf/view?usp=sharing
+```
+
+Este archivo contiene la transcripción del video de defensa técnica y se incorpora para cumplir con los requisitos de accesibilidad establecidos en la Evaluación Parcial 3.
+
+---
 
 # ✅ Checklist
 
