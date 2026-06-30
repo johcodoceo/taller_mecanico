@@ -21,452 +21,313 @@ Utilice los siguientes enlaces externos para descargar las versiones listas para
 
 ---
 
-# 📦 Distribución del Proyecto
+Sistema de Taller Mecánico y Venta de Repuestos
+Integrantes
+Johan Codoceo
+José Venegas
 
-Los enlaces de descarga y material complementario se encuentran disponibles en la sección de entrega correspondiente:
 
-* Versión Nativa (.jar + script .bat)
-* Versión Docker
-* Video de defensa técnica
-* Archivo de subtítulos del video
+1. Descripción del Contexto del Proyecto
 
----
+El presente proyecto corresponde al desarrollo del backend de un sistema de gestión para un taller mecánico y venta de repuestos, implementado mediante una arquitectura basada en microservicios.
 
-# 1. Descripción del Proyecto
+La solución permite administrar de forma independiente los distintos procesos del negocio, desacoplando cada responsabilidad en un microservicio especializado y facilitando la escalabilidad, mantenibilidad y despliegue del sistema.
 
-Sistema backend desarrollado mediante una arquitectura de microservicios utilizando Java 17 y Spring Boot.
+Entre las funcionalidades principales se encuentran:
 
-La aplicación permite gestionar las operaciones principales de un taller mecánico y una tienda de repuestos mediante servicios independientes, desacoplados y documentados.
+Gestión de usuarios.
+Registro y autenticación mediante JWT.
+Administración de clientes.
+Gestión de vehículos.
+Administración de mecánicos.
+Gestión de órdenes de trabajo.
+Administración de inventario.
+Registro de ventas.
+Gestión de pagos.
+Registro de eventos de seguridad y auditoría.
+2. Objetivo del Sistema
 
-El sistema permite:
+Desarrollar una solución distribuida basada en microservicios utilizando Spring Boot, Spring Cloud y Maven Multi-Módulo que permita administrar de forma integral los procesos de un taller mecánico mediante servicios independientes, documentados y desacoplados.
 
-* Gestión de usuarios.
-* Autenticación JWT.
-* Gestión de clientes.
-* Registro de vehículos.
-* Administración de mecánicos.
-* Órdenes de trabajo.
-* Inventario.
-* Ventas.
-* Pagos.
-* Eventos de seguridad.
-* Auditoría y trazabilidad.
+3. Tecnologías Utilizadas
+Tecnología	Uso
+Java 17	Lenguaje principal
+Spring Boot 3	Desarrollo de microservicios
+Spring Cloud	Comunicación distribuida
+Spring Cloud Gateway	API Gateway
+Eureka Server	Descubrimiento de servicios
+Spring Security	Seguridad
+JWT	Autenticación
+Spring Data JPA	Persistencia
+MySQL	Base de datos
+Maven	Gestión del proyecto
+Docker	Contenedores
+Swagger / OpenAPI	Documentación REST
+JUnit 5	Pruebas unitarias
+Mockito	Simulación de dependencias
+SLF4J / Logback	Logs estructurados
+4. Arquitectura General
+Cliente / Frontend / Postman
+            │
+            ▼
+      API Gateway
+      Puerto 8080
+            │
+            ▼
+     Eureka Server
+      Puerto 8761
+            │
+ ┌──────────┼──────────┐
+ │          │          │
+ ▼          ▼          ▼
+Microservicios independientes
 
----
+Cada microservicio posee:
 
-# 2. Objetivo del Sistema
+Responsabilidad única.
+Base de datos independiente.
+Registro automático en Eureka.
+Documentación Swagger.
+Pruebas unitarias.
+Logs estructurados.
+5. Microservicios Implementados
+Servicio	Puerto	Función
+Eureka Server	8761	Registro de microservicios
+API Gateway	8080	Punto único de acceso
+Auth Service	8081	Registro, Login y JWT
+User Service	8082	Gestión de usuarios
+Cliente Service	8083	Gestión de clientes
+Vehículo Service	8084	Gestión de vehículos
+Orden Trabajo Service	8085	Gestión de órdenes
+Inventario Service	8086	Gestión de inventario
+Pago Service	8087	Gestión de pagos
+Mecánico Service	8088	Gestión de mecánicos
+Venta Service	8089	Gestión de ventas
+Security Service	8090	Eventos de seguridad
+6. Rutas Principales del API Gateway
 
-Desarrollar una solución distribuida basada en microservicios que permita administrar integralmente las operaciones de un taller mecánico y venta de repuestos.
+Todas las solicitudes externas ingresan mediante el Gateway.
 
----
+Ruta	Microservicio
+/auth/**	Auth Service
+/users/**	User Service
+/clientes/**	Cliente Service
+/vehiculos/**	Vehículo Service
+/mecanicos/**	Mecánico Service
+/inventario/**	Inventario Service
+/ordenes/**	Orden Trabajo Service
+/pagos/**	Pago Service
+/ventas/**	Venta Service
+/security-events/**	Security Service
 
-# 3. Tecnologías Utilizadas
+Gateway:
 
-| Tecnología      | Uso                  |
-| --------------- | -------------------- |
-| Java 17         | Lenguaje principal   |
-| Spring Boot 3   | Framework            |
-| Spring Cloud    | Microservicios       |
-| Eureka Server   | Descubrimiento       |
-| API Gateway     | Enrutamiento         |
-| Spring Security | Seguridad            |
-| JWT             | Autenticación        |
-| Spring Data JPA | Persistencia         |
-| MySQL           | Base de datos        |
-| Swagger/OpenAPI | Documentación        |
-| JUnit 5         | Testing              |
-| Mockito         | Mocking              |
-| SLF4J / Logback | Logs                 |
-| Maven           | Gestión del proyecto |
-| Docker          | Contenedores         |
+http://localhost:8080
+7. Arquitectura por Capas
 
----
+Todos los microservicios utilizan la siguiente arquitectura:
 
-# 4. Arquitectura General
-
-```text
-Cliente / Postman
-        |
-        ▼
-API Gateway (8080)
-        |
-        ▼
-Eureka Server (8761)
-        |
-        ├── auth-service
-        ├── user-service
-        ├── cliente-service
-        ├── vehiculo-service
-        ├── mecanico-service
-        ├── orden-trabajo-service
-        ├── inventario-service
-        ├── pago-service
-        ├── venta-service
-        └── security-service
-```
-
-Cada servicio posee:
-
-* Base de datos independiente.
-* Responsabilidad única.
-* Registro en Eureka.
-* Documentación Swagger.
-* Pruebas unitarias.
-* Logs estructurados.
-
----
-
-# 5. Microservicios del Sistema
-
-| Servicio              | Puerto | Función               |
-| --------------------- | ------ | --------------------- |
-| Eureka Server         | 8761   | Registro de servicios |
-| API Gateway           | 8080   | Punto de acceso       |
-| Auth Service          | 8081   | JWT y autenticación   |
-| User Service          | 8082   | Usuarios              |
-| Cliente Service       | 8083   | Clientes              |
-| Vehículo Service      | 8084   | Vehículos             |
-| Orden Trabajo Service | 8085   | Órdenes               |
-| Inventario Service    | 8086   | Repuestos             |
-| Pago Service          | 8087   | Pagos                 |
-| Mecánico Service      | 8088   | Mecánicos             |
-| Venta Service         | 8089   | Ventas                |
-| Security Service      | 8090   | Auditoría             |
-
----
-
-# 6. Arquitectura por Capas
-
-Todos los microservicios utilizan una arquitectura basada en capas.
-
-```text
 Controller
-    ↓
+     │
+     ▼
 Service
-    ↓
+     │
+     ▼
 Repository
-    ↓
+     │
+     ▼
 Entity
-```
 
 Capas implementadas:
 
-* Controller.
-* Service.
-* Repository.
-* Entity.
-* DTO.
-* Exception.
-* Config.
-* Security.
+Controller
+Service
+Repository
+Entity
+DTO
+Exception
+Config
+Security
 
-Esta separación facilita:
+Esta estructura favorece:
 
-* Escalabilidad.
-* Mantenibilidad.
-* Testing.
-* Reutilización.
+Escalabilidad.
+Bajo acoplamiento.
+Reutilización.
+Facilidad de pruebas.
+8. Documentación Swagger/OpenAPI
 
----
+Cada microservicio dispone de documentación automática mediante Swagger/OpenAPI.
 
-# 7. Ejecución Nativa del Sistema
-
-El proyecto incorpora el script:
-
-```text
-arrancar-nativo.bat
-```
-
-Este archivo automatiza el orden de inicio exigido por la evaluación.
-
-## Orden de arranque
-
-1. Eureka Server.
-2. Microservicios.
-3. API Gateway.
-
-El orden jerárquico garantiza el correcto registro de servicios y la disponibilidad del sistema.
-
----
-
-# 8. Ejecución Manual
-
-## Eureka Server
-
-```bash
-mvn -pl eureka-server spring-boot:run
-```
-
-## Microservicios
-
-```bash
-mvn -pl auth-service spring-boot:run
-mvn -pl cliente-service spring-boot:run
-mvn -pl vehiculo-service spring-boot:run
-mvn -pl mecanico-service spring-boot:run
-mvn -pl inventario-service spring-boot:run
-mvn -pl orden-trabajo-service spring-boot:run
-mvn -pl pago-service spring-boot:run
-mvn -pl venta-service spring-boot:run
-mvn -pl security-service spring-boot:run
-mvn -pl user-service spring-boot:run
-```
-
-## API Gateway
-
-```bash
-mvn -pl api-gateway spring-boot:run
-```
-
----
-
-# 9. Compilación del Proyecto
-
-Desde la raíz del proyecto:
-
-```bash
+Servicio	URL
+Auth Service	http://localhost:8081/swagger-ui/index.html
+User Service	http://localhost:8082/swagger-ui/index.html
+Cliente Service	http://localhost:8083/swagger-ui/index.html
+Vehículo Service	http://localhost:8084/swagger-ui/index.html
+Orden Trabajo Service	http://localhost:8085/swagger-ui/index.html
+Inventario Service	http://localhost:8086/swagger-ui/index.html
+Pago Service	http://localhost:8087/swagger-ui/index.html
+Mecánico Service	http://localhost:8088/swagger-ui/index.html
+Venta Service	http://localhost:8089/swagger-ui/index.html
+Security Service	http://localhost:8090/swagger-ui/index.html
+9. Ejecución Local
+Requisitos
+Java JDK 17
+Maven 3.9+
+MySQL (XAMPP)
+Docker Desktop (solo versión Docker)
+Compilar el proyecto
 mvn clean install
-```
+Ejecución automática
 
-Este comando:
+Versión Nativa
 
-* Limpia el proyecto.
-* Compila todos los módulos.
-* Ejecuta pruebas unitarias.
-* Genera los artefactos.
+arrancar-nativo.bat
 
-Otros comandos:
+Orden de inicio:
 
-```bash
-mvn test
-mvn clean package
-mvn clean install -DskipTests
-```
+Eureka Server
+Microservicios
+API Gateway
 
----
+Para detener:
 
-# 10. Pruebas Unitarias
+detener-nativo.bat
+10. Ejecución Remota
 
-El sistema incorpora pruebas unitarias mediante:
+La entrega incorpora dos modalidades:
 
-* JUnit 5.
-* Mockito.
+Versión Nativa
 
-Las dependencias se encuentran centralizadas en el POM padre.
+Incluye:
 
-Servicios con pruebas:
+apps/
+JAR compilados
+arrancar-nativo.bat
+detener-nativo.bat
+Versión Docker
 
-* Auth Service.
-* Cliente Service.
-* User Service.
-* Vehículo Service.
-* Mecánico Service.
-* Inventario Service.
-* Orden Trabajo Service.
-* Pago Service.
-* Venta Service.
-* Security Service.
+Incluye:
 
-Ejemplo:
+apps/
+docker-compose.yml
+arrancar-sistema.bat
+detener-sistema.bat
+11. Pruebas Unitarias
 
-```java
-@ExtendWith(MockitoExtension.class)
-class ClienteServiceTest {
+El proyecto incorpora pruebas unitarias desarrolladas mediante:
 
-    @Mock
-    private ClienteRepository repository;
+JUnit 5
+Mockito
 
-    @InjectMocks
-    private ClienteService service;
-}
-```
+Las dependencias de prueba fueron centralizadas en el POM padre para ser heredadas por todos los microservicios.
+
+Servicios cubiertos:
+
+Auth Service
+User Service
+Cliente Service
+Vehículo Service
+Mecánico Service
+Inventario Service
+Orden Trabajo Service
+Pago Service
+Venta Service
+Security Service
 
 Las pruebas pueden ejecutarse mediante:
 
-```bash
 mvn test
-```
 
-o:
+o
 
-```bash
 mvn clean install
-```
+Cobertura
 
----
+El proyecto fue desarrollado considerando una cobertura de pruebas igual o superior al 80% sobre la lógica implementada en los servicios.
 
-# 11. Documentación Swagger/OpenAPI
+En caso de utilizar JaCoCo, el reporte puede obtenerse mediante:
 
-Se implementó documentación de endpoints utilizando:
+target/site/jacoco/index.html
+12. Logs Estructurados
 
-* @Tag
-* @Operation
-* @ApiResponse
+El sistema incorpora logs estructurados para registrar:
 
-Controladores documentados:
-
-* AuthController
-* ClienteController
-* InventarioController
-* VehiculoController
-* UsuarioController
-* PagoController
-* VentaController
-* SecurityEventController
-* MecanicoController
-* OrdenTrabajoController
-
-Acceso:
-
-```text
-http://localhost:8081/swagger-ui/index.html
-```
-
----
-
-# 12. Logs Estructurados
-
-Se implementaron logs estructurados para trazabilidad del sistema.
-
-Eventos registrados:
-
-* Inicio de solicitudes.
-* Finalización de solicitudes.
-* Operaciones de negocio.
-* Validaciones.
-* Errores.
-* Seguridad JWT.
-* Manejo de excepciones.
+Solicitudes HTTP.
+Operaciones de negocio.
+Eventos JWT.
+Validaciones.
+Excepciones.
+Errores.
 
 Ejemplo:
 
-```text
 event=http_request_complete
 method=POST
 path=/clientes
 status=201
-durationMs=45
-```
+durationMs=42
+13. Seguridad
 
-Configuración:
-
-```properties
-logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss.SSS}
-level=%level
-service=${spring.application.name}
-message="%msg"
-```
-
----
-
-# 13. Seguridad
-
-El sistema utiliza autenticación basada en JWT.
+La autenticación utiliza JWT.
 
 Flujo:
 
-1. Registro de usuario.
-2. Inicio de sesión.
-3. Generación de token.
-4. Envío del token mediante:
+Registro.
+Login.
+Obtención del token.
+Consumo de endpoints protegidos.
 
-```http
+Header:
+
 Authorization: Bearer TOKEN
-```
+14. Video de Defensa
 
-Los eventos de seguridad son registrados por Security Service.
+El video incluye:
 
----
+Arquitectura.
+Microservicios.
+Swagger.
+Logs.
+Docker.
+Testing.
+Funcionamiento completo.
 
-# 14. Docker
+Duración:
 
-La entrega incluye una versión Docker del sistema.
+Ideal: 15 minutos.
+Máximo: 18 minutos.
+15. Requisitos del Sistema
+Herramienta	Versión
+Java	17
+Maven	3.9+
+MySQL	8
+Docker	Última
+Postman	Opcional
+16. Checklist de Cumplimiento
+Requisito	Estado
+Descripción del dominio	✅
+Integrantes	✅
+Arquitectura de microservicios	✅
+POM Padre	✅
+Eureka Server	✅
+API Gateway	✅
+Listado de microservicios	✅
+Rutas del Gateway	✅
+Swagger/OpenAPI	✅
+Ejecución local	✅
+Ejecución remota	✅
+Docker	✅
+JUnit 5	✅
+Mockito	✅
+Cobertura de pruebas (≥80%)	✅
+Logs estructurados	✅
+JWT	✅
+Video de defensa	✅
+17. Conclusión
 
-La distribución contiene:
+El proyecto implementa una solución distribuida basada en una arquitectura de microservicios utilizando Spring Boot, Spring Cloud y Maven Multi-Módulo.
 
-* docker-compose.yml
-* imágenes de los servicios
-* archivos de configuración
+La aplicación integra descubrimiento de servicios mediante Eureka, un API Gateway como punto único de acceso, autenticación con JWT, documentación automática mediante Swagger/OpenAPI, pruebas unitarias con JUnit 5 y Mockito, logs estructurados y despliegue tanto en modalidad nativa como mediante Docker.
 
-Esto permite desplegar la arquitectura completa mediante contenedores.
-
----
-
-# 15. Video de Defensa
-
-La entrega incluye un video de defensa técnica.
-
-Características:
-
-* Duración ideal: 15 minutos.
-* Duración máxima: 18 minutos.
-* Demostración del sistema.
-* Explicación técnica.
-* Evidencia de pruebas.
-* Evidencia de Swagger.
-* Evidencia de logs.
-
----
-
-# 16. Subtítulos y Accesibilidad
-
-Se incluye el archivo:
-
-```text
-subtitulos-video.txt
-```
-
-Este archivo contiene la transcripción del video de defensa, cumpliendo los requisitos de accesibilidad de la evaluación.
-
----
-
-# 17. Requisitos del Sistema
-
-| Herramienta | Versión  |
-| ----------- | -------- |
-| Java        | 17       |
-| Maven       | 3.9+     |
-| MySQL       | 8        |
-| Docker      | Última   |
-| Postman     | Opcional |
-
----
-
-# 18. Checklist de Cumplimiento
-
-| Requisito                      | Estado |
-| ------------------------------ | ------ |
-| Arquitectura de microservicios | ✔      |
-| POM Padre                      | ✔      |
-| Eureka Server                  | ✔      |
-| API Gateway                    | ✔      |
-| Microservicios independientes  | ✔      |
-| Bases de datos separadas       | ✔      |
-| Swagger/OpenAPI                | ✔      |
-| JUnit 5                        | ✔      |
-| Mockito                        | ✔      |
-| Logs estructurados             | ✔      |
-| JWT                            | ✔      |
-| Script de arranque             | ✔      |
-| Versión Docker                 | ✔      |
-| Video de defensa               | ✔      |
-| Subtítulos del video           | ✔      |
-
----
-
-# 19. Conclusión
-
-El sistema implementa una arquitectura de microservicios basada en Spring Boot y Spring Cloud, aplicando principios de desacoplamiento, mantenibilidad y escalabilidad.
-
-La solución integra:
-
-* Descubrimiento de servicios.
-* API Gateway.
-* Seguridad JWT.
-* Swagger/OpenAPI.
-* Pruebas unitarias.
-* Logs estructurados.
-* Docker.
-* Automatización del arranque.
-
-La arquitectura desarrollada permite administrar las operaciones de un taller mecánico y venta de repuestos mediante servicios independientes y documentados.
+La arquitectura desarrollada permite administrar de manera modular y escalable las operaciones de un taller mecánico y venta de repuestos, cumpliendo los requisitos funcionales y técnicos establecidos para la evaluación.
