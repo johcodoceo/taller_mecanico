@@ -1,6 +1,23 @@
-# 🚗 SISTEMA DE TALLER MECÁNICO Y VENTA DE REPUESTOS
 
-## Entrega Final – Arquitectura de Microservicios
+  # 🚀 SISTEMA DE MICROSERVICIOS MULTIMÓDULO - ENTREGA FINAL
+
+
+## 📦 COMPONENTES DE DISTRIBUCIÓN Y DEFENSA TÉCNICA
+
+Utilice los siguientes enlaces externos para descargar las versiones listas para producción y visualizar la defensa del proyecto:
+
+
+
+| Componente | Descripción | Enlace de Descarga (Nube externa) |
+
+| :--- | :--- | :--- |
+
+| **📦 Versión Sin Docker** <br>*(Arranque Nativo)* | Archivo `.zip` que contiene la carpeta `apps/` con los `.jar` compilados y el script `arrancar-nativo.bat` ordenado por fases. | [Descargar ZIP Nativo aquí](https://drive.google.com/file/d/1azkHPlvBv49VBWWkD2a84scpTL6op_9o/view?usp=sharing) |
+
+| **🐳 Versión Con Docker** <br>*(Avance Examen Transversal)* | Archivo `.zip` que contiene la carpeta `apps/` con los `.jar`, el archivo `docker-compose.yml` y el script automatizado `arrancar-sistema.bat`. | [Descargar ZIP Docker aquí](https://drive.google.com/file/d/1pQeJgMBx8Pb-p990V4KgjTFmTtvPplcA/view?usp=sharing) |
+
+| **🎥 Video de Defensa Técnica** <br>*(Evaluación Individual)* | Enlace directo al video explicativo donde se evidencia el funcionamiento, testing y el aporte técnico individual. **Duración ideal: 15 minutos (Máximo permitido: 18 minutos).** | [Ver Video Explicativo aquí](https://drive.google.com/drive/folders/1TwkMSGTVrnF7GZKkhrhVfHe2NaTwxP6j?usp=sharing) |
+
 
 ---
 
